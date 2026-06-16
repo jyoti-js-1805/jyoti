@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HealthCare+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#eef5ff;
+}
+
+/* HEADER */
+header{
+background:linear-gradient(135deg,#0057ff,#00c6ff);
+color:rgb(224, 216, 216);
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+}
+
+nav button{
+margin:5px;
+padding:8px 12px;
+border:none;
+background:rgb(239, 235, 235);
+border-radius:6px;
+cursor:pointer;
+}
+
+.page{display:none;padding:20px}
+.active{display:block}
+
+/* HOME */
+.hero{
+background:url("https://images.unsplash.com/photo-1584515933487-779824d29309");
+background-size:cover;
+.card{
+background:white;
+padding:15px;
+margin:10px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:10px;
+}
+
+.about{
+padding:15px;
+background:#fff;
+border-radius:10px;
+transition:.3s;
+}
+.about:hover{transform:translateY(-5px)}
+
+.btn{
+padding:8px;
+background:#0077ff;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+margin:5px;
+}
+
+/* MED STORE (UNCHANGED) */
+.med{
+display:flex;
+justify-content:space-between;
+padding:10px;
+border:1px solid #ddd;
+margin:5px 0;
+border-radius:8px;
+}
+
+/* CART */
+.cart-item{
+display:flex;
+justify-content:space-between;
+margin:5px 0;
+}
+
+/* DOCTOR */
+.doctor{
+border:1px solid #ddd;
+padding:10px;
+margin:8px 0;
+border-radius:10px;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin:5px 0;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h3>HealthCare Pro V18</h3>
+
+<nav>
+<button onclick="show('home')">Home</button>
+<button onclick="show('store')">Medical Store</button>
+<button onclick="show('doctor')">Doctor</button>
+<button onclick="show('cart')">Cart</button>
+</nav>
+</header>
+
+<!-- HOME (IMPROVED) -->
+<div id="home" class="page active">
+
+<div class="hero">
+<h1>Smart Healthcare Platform</h1>
+</div>
+
+<div class="card">
+<h2>About Us</h2>
+
+<div class="grid">
+<div class="about">✔ Trusted Doctors Network</div>
+<div class="about">✔ Fast Medicine Delivery</div>
+<div class="about">✔ Online & Offline Consultations</div>
+<div class="about">✔ 24/7 Emergency Support</div>
+</div>
+</div>
+
+<div class="card">
+<h2>Contact Us</h2>
+<p>📧 support@healthcare.com</p>
+<p>📞 +91 9876543210</p>
+<p>🏥 Emergency Available 24/7</p>
+<p>📍 India Healthcare Center</p>
+</div>
+
+</div>
+
+<!-- STORE (NO CHANGE LOGIC) -->
+<div id="store" class="page">
+<div class="card">
+<h2>Medical Store</h2>
+<input placeholder="Search medicine..." onkeyup="searchMed(this.value)">
+<div id="medList"></div>
+</div>
+</div>
+
+<!-- DOCTOR (10+ DOCTORS + FLOW FIX) -->
+<div id="doctor" class="page">
+
+<div class="card">
+<h2>Select Doctor</h2>
+
+<div class="doctor"><b>Dr. Sharma</b> (Cardiologist)<button class="btn" onclick="selectDoc('Dr. Sharma')">Book</button></div>
+<div class="doctor"><b>Dr. Mehta</b> (Physician)<button class="btn" onclick="selectDoc('Dr. Mehta')">Book</button></div>
+<div class="doctor"><b>Dr. Khan</b> (Pulmonologist)<button class="btn" onclick="selectDoc('Dr. Khan')">Book</button></div>
+<div class="doctor"><b>Dr. Gupta</b> (Neurologist)<button class="btn" onclick="selectDoc('Dr. Gupta')">Book</button></div>
+<div class="doctor"><b>Dr. Singh</b> (Dermatologist)<button class="btn" onclick="selectDoc('Dr. Singh')">Book</button></div>
+<div class="doctor"><b>Dr. Patel</b> (Orthopedic)<button class="btn" onclick="selectDoc('Dr. Patel')">Book</button></div>
+<div class="doctor"><b>Dr. Verma</b> (ENT)<button class="btn" onclick="selectDoc('Dr. Verma')">Book</button></div>
+<div class="doctor"><b>Dr. Ali</b> (Dentist)<button class="btn" onclick="selectDoc('Dr. Ali')">Book</button></div>
+<div class="doctor"><b>Dr. Reddy</b> (Surgeon)<button class="btn" onclick="selectDoc('Dr. Reddy')">Book</button></div>
+<div class="doctor"><b>Dr. Joshi</b> (Gynecologist)<button class="btn" onclick="selectDoc('Dr. Joshi')">Book</button></div>
+<div class="doctor"><b>Dr. Nair</b> (Psychiatrist)<button class="btn" onclick="selectDoc('Dr. Nair')">Book</button></div>
+<div class="doctor"><b>Dr. Iyer</b> (Cardiac Surgeon)<button class="btn" onclick="selectDoc('Dr. Iyer')">Book</button></div>
+
+</div>
+
+<div class="card" id="docForm" style="display:none">
+
+<h3>Book Appointment</h3>
+
+<input id="pname" placeholder="Patient Name">
+<input id="pphone" placeholder="Phone">
+<input id="problem" placeholder="Health Problem">
+<input id="date" placeholder="Date & Time">
+
+<select id="type">
+<option>Online Consultation</option>
+<option>Hospital Visit</option>
+</select>
+
+<button class="btn" onclick="bookDoc()">Confirm Appointment</button>
+
+</div>
+
+</div>
+
+<!-- CART (FULL FIXED) -->
+<div id="cart" class="page">
+
+<div class="card">
+<h2>Cart & Order</h2>
+
+<div id="items"></div>
+<div id="total"></div>
+
+<h3>Delivery Details</h3>
+<input id="name" placeholder="Full Name">
+<input id="phone" placeholder="Phone">
+<input id="address" placeholder="Full Address">
+
+<h3>Payment Method</h3>
+<select id="payment">
+<option>Cash on Delivery</option>
+<option>Online Payment</option>
+</select>
+
+<button class="btn" onclick="placeOrder()">Place Order</button>
+
+</div>
+
+</div>
+
+<script>
+
+/* NAV */
+function show(id){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+}
+
+/* MED STORE (UNCHANGED) */
+let meds=[];
+let base=["Paracetamol","Crocin","Dolo","Aspirin","Amoxicillin"];
+
+for(let i=1;i<=120;i++){
+meds.push({
+id:i,
+name:base[i%base.length]+" "+i,
+price:Math.floor(Math.random()*500)+10
+});
+}
+
+let cart=[];
+
+function searchMed(v){
+let html="";
+meds.forEach((m,i)=>{
+if(m.name.toLowerCase().includes(v.toLowerCase())){
+html+=`
+<div class="med">
+<div>${m.name}<br>₹${m.price}</div>
+<button class="btn" onclick="add(${i})">Add</button>
+</div>`;
+}
+});
+document.getElementById("medList").innerHTML=html;
+}
+
+function add(i){
+let m=meds[i];
+let f=cart.find(c=>c.id===m.id);
+if(f) f.qty++;
+else cart.push({...m,qty:1});
+render();
+}
+
+function render(){
+let html="";
+let total=0;
+
+cart.forEach(c=>{
+total+=c.price*c.qty;
+html+=`
+<div class="cart-item">
+<div>${c.name} x ${c.qty}</div>
+<div>₹${c.price*c.qty}</div>
+</div>`;
+});
+
+document.getElementById("items").innerHTML=html;
+document.getElementById("total").innerText="Total: ₹"+total;
+}
+
+/* ORDER FIX */
+function placeOrder(){
+
+if(cart.length==0){
+alert("Cart Empty");
+return;
+}
+
+let n=document.getElementById("name").value;
+let p=document.getElementById("phone").value;
+let a=document.getElementById("address").value;
+let pay=document.getElementById("payment").value;
+
+if(!n||!p||!a){
+alert("Fill all details");
+return;
+}
+
+alert(
+"ORDER CONFIRMED ✔\n"+
+"Name: "+n+
+"\nPhone: "+p+
+"\nAddress: "+a+
+"\nPayment: "+pay+
+"\nTotal: ₹"+document.getElementById("total").innerText
+);
+
+cart=[];
+render();
+}
+
+/* DOCTOR FIX */
+let doc="";
+
+function selectDoc(d){
+doc=d;
+document.getElementById("docForm").style.display="block";
+}
+
+function bookDoc(){
+
+let n=document.getElementById("pname").value;
+let p=document.getElementById("pphone").value;
+let pr=document.getElementById("problem").value;
+let d=document.getElementById("date").value;
+let t=document.getElementById("type").value;
+
+if(!n||!p||!pr||!d){
+alert("Fill all details");
+return;
+}
+
+alert(
+"APPOINTMENT CONFIRMED ✔\n"+
+"Doctor: "+doc+
+"\nPatient: "+n+
+"\nProblem: "+pr+
+"\nType: "+t+
+"\nTime: "+d
+);
+}
+
+</script>
+
+</body>
+</html>
